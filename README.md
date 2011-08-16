@@ -28,7 +28,7 @@ Questions? Join the duo_web mailing list at
 <http://groups.google.com/group/duo_web>
 
 Report any bugs, feature requests, etc. to us directly:
-<https://github.com/duosecurity/duo_web/issues>
+<https://github.com/duosecurity/duo_python/issues>
 
 Have fun!
 
