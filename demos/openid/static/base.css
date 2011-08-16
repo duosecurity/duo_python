@@ -1,0 +1,246 @@
+/* Copyright 2007 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+body {
+  background-color: white;
+  color: black;
+  margin: 10px;
+}
+
+body, input, textarea {
+  font-family: Arial, sans-serif;
+  font-size: medium;
+}
+
+#body {
+  clear: both;
+  margin-left: 1em;
+  margin-top: 2em;
+}
+
+#header {
+  margin-top: 1.5em;
+}
+
+#title, .top, .bottom {
+  background-color: #c3d9ff;
+}
+
+#footer, #title {
+  padding: .3em;
+}
+
+.top {
+  font-weight: bold;
+  text-align: center;
+}
+
+#title {
+  font-weight: bold;
+  border-top: 1px solid #0000dd;
+}
+
+#login {
+  font-size: 80%;
+  text-align: right;
+}
+
+#footer {
+  margin-top: 2em;
+  text-align: center;
+  font-size: 80%;
+}
+
+
+/*
+ * Links
+ */
+a:link {
+  color: #0000cc;
+}
+
+a:active {
+  color: red;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a img {
+  border: none;
+}
+
+/*
+ * Misc
+ */
+img.icon {
+  vertical-align: middle;
+}
+
+img#openid-logo {
+  float: left;
+  background-color: white;
+  margin-right: .5em;
+  padding-right: .5em;
+  margin-top: -1.5em;
+}
+
+.light {
+  color: #999999;
+  height: 5em;
+}
+
+.url {
+  font-style: italic;
+  color: #999922;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.warning {
+  color: red;
+  font-style: italic;
+}
+
+/*
+ * Forms
+ */
+form {
+  margin: 0;
+  padding: 0;
+}
+
+a.button, input[type^="submit"], input[type^="button"] {
+  margin: 0;
+  padding: 2px 5px 2px 5px;
+  font-family: Arial, Sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  color: #222;
+  cursor: default;
+  background: #ddd url("/static/button-background.gif") repeat-x 0 0;
+  border: 1px solid #aaa;
+}
+
+a.button:hover, input[type^="submit"]:hover, input[type^="button"]:hover {
+  border-color: #9cf #69e #69e #7af;
+}
+
+.form .field {
+  margin-bottom: 0.5em;
+}
+
+/*
+ * Round corners
+ */
+.top, .bottom {
+  position: relative;
+}
+
+.right, .left {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+}
+
+.right { right: 0px; }
+.left { left: 0px; }
+.top div { top: 0px; }
+.bottom div { bottom: 0px; }
+
+.top .left {
+  background-image: url("/static/round_top_left.png");
+}
+
+.top .right {
+  background-image: url("/static/round_top_right.png");
+}
+
+.bottom .left {
+  background-image: url("/static/round_bottom_left.png");
+}
+
+.bottom .right {
+  background-image: url("/static/round_bottom_right.png");
+}
+
+table th {
+  background-color: #e8eef7;
+}
+
+table td {
+  padding: .2em;
+}
+
+/*
+ * Logins table
+ */
+.confirmed {
+  border: 1px dotted #22aa22;
+  background-color: #aaffaa;
+}
+
+tr.confirmed:hover {
+  background-color: #ddffdd;
+}
+
+.remembered {
+  border: 1px dotted #88dd88;
+  background-color: #ccffcc;
+}
+
+tr.remembered:hover {
+  background-color: #ddffdd;
+}
+
+.declined {
+  border: 1px dotted #aa2222;
+  background-color: #ffbbbb;
+}
+
+tr.declined:hover {
+  background-color: #ffdddd;
+}
+
+table.logins {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+div.top {
+  padding: .2em;
+}
+
+
+table.logins tr {
+  border-left: none;
+  border-right: none;
+}
+
+td.kind {
+  text-align: center;
+}
+
+table.key {
+  margin: .5em;
+  margin-left: 0;
+  border-collapse: separate;
+  width: auto;
+  border-spacing: .3em;
+}
+

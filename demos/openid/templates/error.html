@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="openid-error">
+<p>
+<a href="http://openid.net/">OpenID</a> error:
+<pre><code>{{ self.request.uri }}</code</pre>
+<pre><code>{{ args }}</code</pre>
+<pre><code>{{ message }}</code</pre>
+</p>
+</div>
+{% endblock %}

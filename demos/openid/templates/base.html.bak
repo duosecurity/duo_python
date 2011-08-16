@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>{% block title %} OpenID for Google Accounts {% endblock %}</title>
+  <link rel="openid2.provider openid.server"
+        href="{{ request_url_without_params }}" />
+  <link href="/static/base.css" rel="stylesheet" type="text/css"/>
+  {% block head %}{% endblock %}
+</head>
+
+<body {% block bodyattributes %}{% endblock %}>
+
+{% block header %}
+<div id="login">
+  {% if user %}
+    <span class="nickname">{{ user.nickname }}</span> |
+  {% endif %}
+  {% if user %}
+    <a href="https://www.google.com/accounts/ManageAccount">My Account</a> |
+    <a href="{{ logout_url|escape }}">Log out</a>
+  {% else %}
+    <a href="{{ login_url|escape }}">Log in</a>
+  {% endif %}
+  | <a href="http://code.google.com/appengine/">Google App Engine</a>
+  | <a href="http://code.google.com/p/google-app-engine-samples/">
+      Download source</a>
+</div>
+
+<div id="header">
+  <img id ="openid-logo" alt="OpenID" src="/static/openid-logo.png" />
+  <p id="title">for
+  {% if user %}
+    {{ user.nickname }}'s Google Account
+  {% else %}
+    Google Accounts
+  {% endif %}
+  </p>
+</div>
+{% endblock %}
+
+<div id="body">
+  {% block body %}{% endblock %}
+</div>
+
+</body>
+</html>

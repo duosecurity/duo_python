@@ -1,0 +1,12 @@
+indexes:
+
+- kind: Association
+  properties:
+  - name: handle
+  - name: url
+
+- kind: Login
+  properties:
+  - name: user
+  - name: time
+    direction: desc

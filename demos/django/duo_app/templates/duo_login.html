@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>{{ message }}</p>
+
+<form method="POST" id="duo_form">
+{% csrf_token %}
+{% if next %}
+<input type="hidden" name="next" value="{{ next }}"/>
+{% endif %}
+</form>
+
+<script src="{{ duo_js_src }}"></script>
+<script>
+Duo.init({'host':'{{ duo_host }}', 'sig_request':'{{ sig_request }}',
+          'post_action':'{{ post_action }}'});
+</script>
+<iframe height="100%%" width="100%%" id="duo_iframe" />
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<body>
+
+<form method="POST" id="duo_form">
+{%for k in postargs.items%}
+<input type="hidden" name="{{k.0}}" value="{{k.1}}" />
+{%endfor%}
+</form>
+
+<script src='/static/Duo-Web-v1.bundled.min.js'></script>
+<script>
+Duo.init({'host':'{{host}}', 'post_action':'{{post_action}}',
+'sig_request':'{{sig_request}}'});
+</script>
+<iframe height='100%%' width='100%%' id='duo_iframe' />
+
+</body>
+</html>
+{% endblock %}

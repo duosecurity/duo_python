@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block body %}
+<p>
+You can use your Google Account to log into any site that supports
+<nobr><a href="http://openid.net/">
+ <img src="/static/openid-icon.png" />OpenID</a></nobr>!
+{% if user %}
+  Just enter
+  <span class="url">{{ request_url_without_path }}/{{ user.nickname }}</span> as
+  your OpenID URL.
+{% else %}
+  First, <a href="{{ login_url|escape }}">log in</a> to your Google account.
+{% endif %}
+</p>
+
+<div class="top">
+  <div class="left"></div>
+  <div class="right"></div>
+  Recent OpenID Requests
+</div>
+
+<table class="logins">
+<!-- <tr><th>Action</th><th>Web Site</th><th>Time</th></tr> -->
+{% for login in logins %}
+  <tr class="{{ login.kind }}">
+    <td class="kind">
+      <img class="icon" src="/static/{{ login.kind }}.png"
+           alt="{{ login.kind }}" title="{{ login.kind }}" />
+    </td>
+    <td class="relying-party">
+      {{ login.relying_party }}
+    </td>
+    <td class="time">
+      {{ login.time|date:"M j \a\t P" }}
+    </td>
+  </tr>
+{% endfor %}
+{% if not logins %}
+  <tr><td colspan="3" class="light" align="center">
+    {% if user %}
+      You haven't used OpenID yet. Try using it to leave a comment on
+      <a href="http://blogsofnote.blogspot.com/">Blogger</a>!
+    {% else %}
+      Please <a href="{{ login_url|escape }}">log in</a> to see your recent
+      OpenID requests.
+    {% endif %}
+  </td></tr>
+{% endif %}
+</table>
+
+<div class="bottom">
+<table class="key"><tr>
+  <td class="confirmed">
+    <img class="icon" class="icon" src="/static/confirmed.png" /> Confirmed
+  </td>
+  <td class="remembered">
+    <img class="icon" src="/static/remembered.png" /> Remembered
+  </td>
+  <td class="declined">
+    <img class="icon" src="/static/declined.png" /> Declined
+  </td>
+</tr></table>
+
+<div class="left"></div>
+<div class="right"></div>
+
+</div>
+
+{% endblock %}

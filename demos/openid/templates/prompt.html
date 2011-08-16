@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<body>
+<p>
+<a href="{{ trust_root }}">{{ trust_root }}</a>
+has asked for your identity. Do you want to respond with your nickname
+<span class="nickname">{{ user.nickname }}</span>?
+</p>
+<form method="post" action="{{action}}">
+<input type="submit" name="yes" value="Yes" />
+<input type="submit" name="no" value="No" />
+<!-- these are used to recreate the OpenID CheckIDRequest -->
+{%for k in postargs.items%}
+<input type="hidden" name="{{k.0}}" value="{{k.1}}" />
+{%endfor%}
+
+<input type="checkbox" name="remember" value="yes" />
+  Remember for two weeks <br />
+</form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,38 @@
+[modified from https://gist.github.com/186251]
+
+A unit test helper library for App Engine.
+
+Note that this is currently COMPLETELY UNTESTED. Consider it demo code only.
+
+This library aims to make it easier to unit-test app engine apps and libraries
+by handling the creation and registration of service stubs and so forth for you.
+It also provides a custom implementation of the Capability service that allows
+you to specify what capabilities you want it to report as disabled, and it wraps
+all stubs in a wrapper that will throw a CapabilityDisabledError if you attempt
+to use a disabled service or method.
+
+Example usage:
+
+class MyUnitTest(appenginetest.DatastoreTest, appenginetest.MemcacheTest):
+  def setUp(self):
+    # Pass arguments to the test classes here to control how stubs
+    # are initialized
+    super(MyUnitTest, self).setUp(
+        require_indexes=True,
+        disabled_capabilities=set([('datastore_v3', '*')]))
+
+  def testMemcache(self):
+    memcache.put('testkey', 'testval')
+    self.assertEqual(memcache.get('testkey'), 'testval')
+
+  def testCapabilities(self):
+    cset = capabilities.CapabilitySet('datastore_v3', methods=['get'])
+    self.assertEqual(cset.is_enabled(), False)
+
+  def testDatastore(self):
+    self.assertRaises(apiproxy_errors.CapabilityDisabledError,
+                      db.get, db.Key.from_path('Model', 1))
+
+
+if __name__ == "__main__":
+  appenginetest.main()
