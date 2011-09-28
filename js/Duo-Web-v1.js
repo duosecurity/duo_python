@@ -222,7 +222,7 @@
 })(jQuery);
 
 
-
+var D = $;
 
 
 /*
@@ -286,7 +286,7 @@ var Duo = {
     },
 
     ready: function() {
-        var iframe = $('#duo_iframe');
+        var iframe = D('#duo_iframe');
 
         /* sanity check for a duo_iframe element */
         if (!iframe.length) {
@@ -294,7 +294,7 @@ var Duo = {
             return;
         }
 
-        var args = $.param({
+        var args = D.param({
             'tx': Duo._duo_sig,
             'parent': document.location.href
         });
@@ -302,13 +302,13 @@ var Duo = {
         var src = 'https://' + Duo._host + '/frame/web/v1/auth?' + args;
         iframe.attr('src', src);
 
-        $.receiveMessage(function(msg) {
+        D.receiveMessage(function(msg) {
             var sig_response = msg.data + ':' + Duo._app_sig;
-            var input = $('<input type="hidden">').attr('name', Duo._post_argument).val(sig_response);
+            var input = D('<input type="hidden">').attr('name', Duo._post_argument).val(sig_response);
 
-            var form = $('#duo_form');
+            var form = D('#duo_form');
             if (!form.length) {
-                form = $('<form>');
+                form = D('<form>');
                 form.insertAfter(iframe);
             }
 
@@ -320,6 +320,6 @@ var Duo = {
     }
 };
 
-$(document).ready(function() {
+D(document).ready(function() {
     Duo.ready();
 });
