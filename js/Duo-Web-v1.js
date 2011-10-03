@@ -222,7 +222,7 @@
 })(jQuery);
 
 
-var D = $;
+var D = jQuery;
 
 
 /*
