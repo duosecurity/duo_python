@@ -19,7 +19,7 @@ urlpatterns = patterns(
     # URLs which demonstrate the use of authorization
     (r'^private/$', 'views.private'),
     (r'^public/$', 'views.public'),
-    (r'^duo_private/$', 'views.duo_private_manual'),
+    (r'^duo_private/$', 'views.duo_private'),
     (r'^duo_private_manual/$', 'views.duo_private_manual'),
     # URLs required by django.contrib.auth
     (r'^accounts/login/$',  'django.contrib.auth.views.login'),

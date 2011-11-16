@@ -49,12 +49,13 @@ def duo_unauthenticate(request):
 # We could use just use django.contrib.auth.decorators.user_passes_test here
 # if Duo authenticatedness was a property of the user, and there's probably
 # a way to do that.
-def duo_auth_required(redirect_field_name=REDIRECT_FIELD_NAME):
+def duo_auth_required(view_func, redirect_field_name=REDIRECT_FIELD_NAME):
     """
     Decorator for views that checks that the user has been authenticated with
     Duo, redirecting to the Duo authentication page if necessary.
     """
     def decorator(view_func):
+        @wraps(view_func, assigned=available_attrs(view_func))
         def _wrapped_view(request, *args, **kwargs):
             if duo_authenticated(request):
                 return view_func(request, *args, **kwargs)
@@ -64,7 +65,7 @@ def duo_auth_required(redirect_field_name=REDIRECT_FIELD_NAME):
                     settings.DUO_LOGIN_URL, redirect_field_name, path))
         return wraps(
             view_func, assigned=available_attrs(view_func))(_wrapped_view)
-    return decorator
+    return decorator(view_func)
 
 # There are a few more validations which could be done here as in
 # django.contrib.auth.login, such as checking the form and redirect,
