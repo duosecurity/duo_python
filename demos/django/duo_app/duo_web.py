@@ -13,6 +13,8 @@ import time
 DUO_PREFIX  = 'TX'
 APP_PREFIX  = 'APP'
 AUTH_PREFIX = 'AUTH'
+ENROLL_PREFIX = 'ENROLL'
+ENROLL_REQUEST_PREFIX = 'ENROLL_REQUEST'
 
 DUO_EXPIRE = 300
 APP_EXPIRE = 3600
@@ -59,7 +61,7 @@ def _parse_vals(key, val, prefix):
 
     return user
 
-def sign_request(ikey, skey, akey, username):
+def _sign_request(ikey, skey, akey, username, prefix):
     """Generate a signed request for Duo authentication.
     The returned value should be passed into the Duo.init() call 
     in the rendered web page used for Duo authentication.
@@ -70,6 +72,7 @@ def sign_request(ikey, skey, akey, username):
     skey      -- Duo secret key
     akey      -- Application secret key
     username  -- Primary-authenticated username
+    prefix    -- DUO_PREFIX or ENROLL_REQUEST_PREFIX
     """
     if not username:
         return ERR_USER
@@ -83,14 +86,45 @@ def sign_request(ikey, skey, akey, username):
     vals = [ username, ikey ]
 
     try:
-        duo_sig = _sign_vals(skey, vals, DUO_PREFIX, DUO_EXPIRE)
+        duo_sig = _sign_vals(skey, vals, prefix, DUO_EXPIRE)
         app_sig = _sign_vals(akey, vals, APP_PREFIX, APP_EXPIRE)
     except:
         return ERR_UNKNOWN
 
     return '%s:%s' % (duo_sig, app_sig)
 
-def verify_response(ikey, skey, akey, sig_response):
+
+def sign_request(ikey, skey, akey, username):
+    """Generate a signed request for Duo authentication.
+    The returned value should be passed into the Duo.init() call
+    in the rendered web page used for Duo authentication.
+
+    Arguments:
+
+    ikey      -- Duo integration key
+    skey      -- Duo secret key
+    akey      -- Application secret key
+    username  -- Primary-authenticated username
+    """
+    return _sign_request(ikey, skey, akey, username, DUO_PREFIX)
+
+
+def sign_enroll_request(ikey, skey, akey, username):
+    """Generate a signed request for Duo authentication.
+    The returned value should be passed into the Duo.init() call
+    in the rendered web page used for Duo authentication.
+
+    Arguments:
+
+    ikey      -- Duo integration key
+    skey      -- Duo secret key
+    akey      -- Application secret key
+    username  -- Primary-authenticated username
+    """
+    return _sign_request(ikey, skey, akey, username, ENROLL_REQUEST_PREFIX)
+
+
+def _verify_response(ikey, skey, akey, prefix, sig_response):
     """Validate the signed response returned from Duo.
     Returns the username of the authenticated user, or None.
     
@@ -99,16 +133,46 @@ def verify_response(ikey, skey, akey, sig_response):
     ikey          -- Duo integration key
     skey          -- Duo secret key
     akey          -- Application secret key
+    prefix        -- AUTH_PREFIX or ENROLL_PREFIX that sig_response
+                     must match
     sig_response  -- The signed response POST'ed to the server
     """
     try:
-        auth_sig, app_sig = sig_response.split(':')
-        auth_user = _parse_vals(skey, auth_sig, AUTH_PREFIX)
+        sig, app_sig = sig_response.split(':')
+        user = _parse_vals(skey, sig, prefix)
         app_user = _parse_vals(akey, app_sig, APP_PREFIX)
     except:
         return None
 
-    if auth_user != app_user:
+    if user != app_user:
         return None
 
-    return auth_user
+    return user
+
+
+def verify_response(ikey, skey, akey, sig_response):
+    """Validate the signed response returned from Duo.
+    Returns the username of the authenticated user, or None.
+
+    Arguments:
+
+    ikey          -- Duo integration key
+    skey          -- Duo secret key
+    akey          -- Application secret key
+    sig_response  -- The signed response POST'ed to the server
+    """
+    return _verify_response(ikey, skey, akey, AUTH_PREFIX, sig_response)
+
+
+def verify_enroll_response(ikey, skey, akey, sig_response):
+    """Validate the signed response returned from Duo.
+    Returns the username of the enrolled user, or None.
+
+    Arguments:
+
+    ikey          -- Duo integration key
+    skey          -- Duo secret key
+    akey          -- Application secret key
+    sig_response  -- The signed response POST'ed to the server
+    """
+    return _verify_response(ikey, skey, akey, ENROLL_PREFIX, sig_response)

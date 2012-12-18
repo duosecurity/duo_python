@@ -74,7 +74,15 @@ class RequestHandler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
-        sig_request = duo_web.sign_request(
+        # Pass in "enroll=1" parameter to trigger enroll only mode
+        sign_function = duo_web.sign_request
+        try:
+            enroll = self.require_query('enroll')
+            sign_function = duo_web.sign_enroll_request
+        except ValueError:
+            pass
+
+        sig_request = sign_function(
             self.server.ikey, self.server.skey, self.server.akey, username)
         self.wfile.write(
             "<script src='/Duo-Web-v1.bundled.min.js'></script>"
@@ -94,7 +102,13 @@ class RequestHandler(SimpleHTTPRequestHandler):
         user = duo_web.verify_response(
             self.server.ikey, self.server.skey, self.server.akey, sig_response)
         if user is None:
-            self.wfile.write('Did not authenticate with Duo.')
+            # See if it was a response to an ENROLL_REQUEST
+            user = duo_web.verify_enroll_response(self.server.ikey,
+                self.server.skey, self.server.akey, sig_response)
+            if user is None:
+                self.wfile.write('Did not authenticate with Duo.')
+            else:
+                self.wfile.write('Enrolled with Duo as %s.' % user)
         else:
             self.wfile.write('Authenticated with Duo as %s.' % user)
         
@@ -105,6 +119,8 @@ def main(ikey, skey, akey, host, port=8080):
     server.skey = skey
     server.akey = akey
     server.host = host
+    print "Visit the root URL with a 'user' argument, e.g."
+    print "'http://localhost:%d/?user=myname'." %  port
     server.serve_forever()
                                                         
 if __name__ == '__main__':
