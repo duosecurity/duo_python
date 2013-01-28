@@ -101,6 +101,10 @@ class RequestHandler(SimpleHTTPRequestHandler):
             return
         user = duo_web.verify_response(
             self.server.ikey, self.server.skey, self.server.akey, sig_response)
+
+        self.send_response(200)
+        self.end_headers()
+
         if user is None:
             # See if it was a response to an ENROLL_REQUEST
             user = duo_web.verify_enroll_response(self.server.ikey,
