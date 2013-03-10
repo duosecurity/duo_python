@@ -1,0 +1,5 @@
+# Copyright (c) 2011 Duo Security
+# All rights reserved, all wrongs reversed.
+
+# DuoSecurity claims that this package is licensed under
+# BSD license, but I will let them add the specifics here.
