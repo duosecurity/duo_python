@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+*.swp
+*~
+.gitconfig
+MANIFEST
+build
+dist

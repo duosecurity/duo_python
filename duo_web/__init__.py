@@ -1,4 +1,4 @@
-# 
+#
 # duo_web.py
 #
 # Copyright (c) 2011 Duo Security
@@ -63,11 +63,11 @@ def _parse_vals(key, val, prefix):
 
 def _sign_request(ikey, skey, akey, username, prefix):
     """Generate a signed request for Duo authentication.
-    The returned value should be passed into the Duo.init() call 
+    The returned value should be passed into the Duo.init() call
     in the rendered web page used for Duo authentication.
-    
+
     Arguments:
-    
+
     ikey      -- Duo integration key
     skey      -- Duo secret key
     akey      -- Application secret key
@@ -127,9 +127,9 @@ def sign_enroll_request(ikey, skey, akey, username):
 def _verify_response(ikey, skey, akey, prefix, sig_response):
     """Validate the signed response returned from Duo.
     Returns the username of the authenticated user, or None.
-    
+
     Arguments:
-    
+
     ikey          -- Duo integration key
     skey          -- Duo secret key
     akey          -- Application secret key
