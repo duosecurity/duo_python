@@ -92,7 +92,7 @@ class SecondaryAuthPage(BasePage):
             "Duo.init({'host':'%(host)s', 'post_action':'%(post_action)s', "
             "'sig_request':'%(sig_request)s'});"
             "</script>"
-            "<iframe height='100%%' width='100%%' id='duo_iframe' />"
+            "<iframe height='500' width='620' frameborder='0' id='duo_iframe' />"
             % {'host':host, 'post_action':self.request.uri,
                'sig_request':sig_request})
         

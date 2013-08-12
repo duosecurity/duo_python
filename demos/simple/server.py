@@ -89,7 +89,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
             "<script>"
             "Duo.init({'host':'%(host)s', 'sig_request':'%(sig_request)s'});"
             "</script>"
-            "<iframe height='100%%' width='100%%' id='duo_iframe' />"
+            "<iframe height='500' width='620' frameborder='0' id='duo_iframe' />"
             % {'host':self.server.host, 'sig_request':sig_request})
         return
 

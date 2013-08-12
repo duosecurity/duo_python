@@ -1,4 +1,11 @@
-from django.conf.urls.defaults import *
+try:
+    from django.conf.urls import patterns, include, url, handler403,
+        handler404, handler500
+except ImportError:
+    # for Django version less then 1.4
+    from django.conf.urls.defaults import patterns, include, url, handler403,
+        handler404, handler500
+
 import settings
 
 import duo_app.urls
