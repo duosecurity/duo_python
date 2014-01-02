@@ -6307,10 +6307,9 @@ window.jQuery = window.$ = jQuery;
     addEventListener = 'addEventListener',
     
     p_receiveMessage,
-    
-    // I couldn't get window.postMessage to actually work in Opera 9.64!
-    has_postMessage = window[postMessage] && !$.browser.opera;
-  
+
+    has_postMessage = window[postMessage];
+
   // Method: jQuery.postMessage
   // 
   // This method will call window.postMessage if available, setting the
