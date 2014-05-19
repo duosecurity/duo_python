@@ -17,7 +17,7 @@ Developer documentation: <http://www.duosecurity.com/docs/duoweb>
 # Support
 
 Report any bugs, feature requests, etc. to us directly:
-<https://github.com/duosecurity/duo_python/issues>
+support@duosecurity.com
 
 Have fun!
 
