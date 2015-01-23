@@ -1,4 +1,4 @@
-# 
+#
 # duo_web.py
 #
 # Copyright (c) 2011 Duo Security
@@ -43,7 +43,7 @@ def _sign_vals(key, vals, prefix, expire):
     sig = _hmac_sha1(key, cookie)
     return '%s|%s' % (cookie, sig)
 
-def _parse_vals(key, val, prefix):
+def _parse_vals(key, val, prefix, ikey):
     ts = int(time.time())
     u_prefix, u_b64, u_sig = val.split('|')
 
@@ -54,7 +54,10 @@ def _parse_vals(key, val, prefix):
     if u_prefix != prefix:
         return None
 
-    user, ikey, exp = base64.b64decode(u_b64).split('|')
+    user, u_ikey, exp = base64.b64decode(u_b64).split('|')
+
+    if u_ikey != ikey:
+        return None
 
     if ts >= int(exp):
         return None
@@ -63,11 +66,11 @@ def _parse_vals(key, val, prefix):
 
 def _sign_request(ikey, skey, akey, username, prefix):
     """Generate a signed request for Duo authentication.
-    The returned value should be passed into the Duo.init() call 
+    The returned value should be passed into the Duo.init() call
     in the rendered web page used for Duo authentication.
-    
+
     Arguments:
-    
+
     ikey      -- Duo integration key
     skey      -- Duo secret key
     akey      -- Application secret key
@@ -75,6 +78,8 @@ def _sign_request(ikey, skey, akey, username, prefix):
     prefix    -- DUO_PREFIX or ENROLL_REQUEST_PREFIX
     """
     if not username:
+        return ERR_USER
+    if '|' in username:
         return ERR_USER
     if not ikey or len(ikey) != IKEY_LEN:
         return ERR_IKEY
@@ -127,9 +132,9 @@ def sign_enroll_request(ikey, skey, akey, username):
 def _verify_response(ikey, skey, akey, prefix, sig_response):
     """Validate the signed response returned from Duo.
     Returns the username of the authenticated user, or None.
-    
+
     Arguments:
-    
+
     ikey          -- Duo integration key
     skey          -- Duo secret key
     akey          -- Application secret key
@@ -138,16 +143,16 @@ def _verify_response(ikey, skey, akey, prefix, sig_response):
     sig_response  -- The signed response POST'ed to the server
     """
     try:
-        sig, app_sig = sig_response.split(':')
-        user = _parse_vals(skey, sig, prefix)
-        app_user = _parse_vals(akey, app_sig, APP_PREFIX)
+        auth_sig, app_sig = sig_response.split(':')
+        auth_user = _parse_vals(skey, auth_sig, AUTH_PREFIX, ikey)
+        app_user = _parse_vals(akey, app_sig, APP_PREFIX, ikey)
     except:
         return None
 
-    if user != app_user:
+    if auth_user != app_user:
         return None
 
-    return user
+    return auth_user
 
 
 def verify_response(ikey, skey, akey, sig_response):
