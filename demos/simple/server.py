@@ -84,13 +84,28 @@ class RequestHandler(SimpleHTTPRequestHandler):
 
         sig_request = sign_function(
             self.server.ikey, self.server.skey, self.server.akey, username)
-        self.wfile.write(
-            "<script src='/Duo-Web-v1.bundled.min.js'></script>"
-            "<script>"
-            "Duo.init({'host':'%(host)s', 'sig_request':'%(sig_request)s'});"
-            "</script>"
-            "<iframe height='500' width='620' frameborder='0' id='duo_iframe' />"
-            % {'host':self.server.host, 'sig_request':sig_request})
+        self.wfile.write("""
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <title>Duo Authentication</title>
+                <meta name='viewport' content='width=device-width, initial-scale=1'>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              </head>
+              <body>
+                <h1>Duo Authentication</h1>
+                <script src='/Duo-Web-v1.bundled.min.js'></script>
+                <script>
+                  Duo.init({'host':'%(host)s', 'sig_request':'%(sig_request)s'});
+                </script>
+                <style>
+                  body {text-align: center;}
+                  iframe {width: 100%%; min-width: 304px; max-width: 620px; height: 330px;}
+                </style>
+                <iframe id='duo_iframe' frameborder='0'></iframe>
+              </body>
+            </html> """ % {'host':self.server.host, 'sig_request':sig_request})
+
         return
 
     def do_POST(self):
