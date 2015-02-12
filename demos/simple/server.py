@@ -14,7 +14,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
         """
         self.send_response(400, msg)
         self.end_headers()
-        self.wfile.write(msg)            
+        self.wfile.write(msg)
 
     def serve_file(self):
         """
@@ -54,7 +54,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
             return form[name].value
         except:
             raise ValueError
-                               
+
     def do_GET(self):
         try:
             self.serve_file()
@@ -115,7 +115,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
                 self.wfile.write('Enrolled with Duo as %s.' % user)
         else:
             self.wfile.write('Authenticated with Duo as %s.' % user)
-        
+
 
 def main(ikey, skey, akey, host, port=8080):
     server = HTTPServer(('', port), RequestHandler)
@@ -126,7 +126,7 @@ def main(ikey, skey, akey, host, port=8080):
     print "Visit the root URL with a 'user' argument, e.g."
     print "'http://localhost:%d/?user=myname'." %  port
     server.serve_forever()
-                                                        
+
 if __name__ == '__main__':
     import ConfigParser
     config = ConfigParser.ConfigParser()
