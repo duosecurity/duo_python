@@ -93,7 +93,7 @@ def _sign_request(ikey, skey, akey, username, prefix):
     try:
         duo_sig = _sign_vals(skey, vals, prefix, DUO_EXPIRE)
         app_sig = _sign_vals(akey, vals, APP_PREFIX, APP_EXPIRE)
-    except:
+    except Exception:
         return ERR_UNKNOWN
 
     return '%s:%s' % (duo_sig, app_sig)
@@ -146,7 +146,7 @@ def _verify_response(ikey, skey, akey, prefix, sig_response):
         auth_sig, app_sig = sig_response.split(':')
         auth_user = _parse_vals(skey, auth_sig, AUTH_PREFIX, ikey)
         app_user = _parse_vals(akey, app_sig, APP_PREFIX, ikey)
-    except:
+    except Exception:
         return None
 
     if auth_user != app_user:
