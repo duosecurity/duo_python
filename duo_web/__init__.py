@@ -37,24 +37,28 @@ def _sign_vals(key, vals, prefix, expire):
     exp = str(int(time.time()) + expire)
 
     val = '|'.join(vals + [ exp ])
-    b64 = base64.b64encode(val)
+    b64 = base64.b64encode(val.encode('utf-8'))
     cookie = '%s|%s' % (prefix, b64)
 
-    sig = _hmac_sha1(key, cookie)
+    sig = _hmac_sha1(key.encode('utf-8'), cookie.encode('utf-8'))
     return '%s|%s' % (cookie, sig)
 
 def _parse_vals(key, val, prefix, ikey):
     ts = int(time.time())
     u_prefix, u_b64, u_sig = val.split('|')
+    cookie = '%s|%s' % (u_prefix, u_b64)
+    e_key = key.encode('utf-8')
+    e_cookie = cookie.encode('utf-8')
 
-    sig = _hmac_sha1(key, '%s|%s' % (u_prefix, u_b64))
-    if _hmac_sha1(key, sig) != _hmac_sha1(key, u_sig):
+    sig = _hmac_sha1(e_key, e_cookie)
+    if _hmac_sha1(e_key, sig.encode('utf-8')) != _hmac_sha1(e_key, u_sig.encode('utf-8')):
         return None
 
     if u_prefix != prefix:
         return None
 
-    user, u_ikey, exp = base64.b64decode(u_b64).split('|')
+    decoded = base64.b64decode(u_b64).decode('utf-8')
+    user, u_ikey, exp = decoded.split('|')
 
     if u_ikey != ikey:
         return None
