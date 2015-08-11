@@ -37,7 +37,7 @@ def _sign_vals(key, vals, prefix, expire):
     exp = str(int(time.time()) + expire)
 
     val = '|'.join(vals + [ exp ])
-    b64 = base64.b64encode(val.encode('utf-8'))
+    b64 = base64.b64encode(val.encode('utf-8')).decode('utf-8')
     cookie = '%s|%s' % (prefix, b64)
 
     sig = _hmac_sha1(key.encode('utf-8'), cookie.encode('utf-8'))
