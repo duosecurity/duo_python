@@ -91,20 +91,19 @@ class RequestHandler(SimpleHTTPRequestHandler):
                 <title>Duo Authentication</title>
                 <meta name='viewport' content='width=device-width, initial-scale=1'>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <link rel="stylesheet" type="text/css" href="Duo-Frame.css">
               </head>
               <body>
                 <h1>Duo Authentication</h1>
-                <script src='/Duo-Web-v1.bundled.min.js'></script>
-                <script>
-                  Duo.init({'host':'%(host)s', 'sig_request':'%(sig_request)s'});
-                </script>
-                <style>
-                  body {text-align: center;}
-                  iframe {width: 100%%; min-width: 304px; max-width: 620px; height: 330px;}
-                </style>
-                <iframe id='duo_iframe' frameborder='0'></iframe>
+                <script src='/Duo-Web-v2.js'></script>
+                <iframe id="duo_iframe"
+                        frameborder="0"
+                        data-host="%(host)s"
+                        data-sig-request="%(sig_request)s"
+                        >
+                </iframe>
               </body>
-            </html> """ % {'host':self.server.host, 'sig_request':sig_request})
+            </html> """ % {'host': self.server.host, 'sig_request': sig_request})
 
         return
 
