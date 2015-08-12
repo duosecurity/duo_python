@@ -10,8 +10,8 @@ import hashlib
 import hmac
 import time
 
-DUO_PREFIX  = 'TX'
-APP_PREFIX  = 'APP'
+DUO_PREFIX = 'TX'
+APP_PREFIX = 'APP'
 AUTH_PREFIX = 'AUTH'
 ENROLL_PREFIX = 'ENROLL'
 ENROLL_REQUEST_PREFIX = 'ENROLL_REQUEST'
@@ -29,19 +29,22 @@ ERR_SKEY = 'ERR|The Duo secret key passed to sign_request() is invalid.'
 ERR_AKEY = 'ERR|The application secret key passed to sign_request() must be at least %s characters.' % AKEY_LEN
 ERR_UNKNOWN = 'ERR|An unknown error has occurred.'
 
+
 def _hmac_sha1(key, msg):
     ctx = hmac.new(key, msg, hashlib.sha1)
     return ctx.hexdigest()
 
+
 def _sign_vals(key, vals, prefix, expire):
     exp = str(int(time.time()) + expire)
 
-    val = '|'.join(vals + [ exp ])
+    val = '|'.join(vals + [exp])
     b64 = base64.b64encode(val)
     cookie = '%s|%s' % (prefix, b64)
 
     sig = _hmac_sha1(key, cookie)
     return '%s|%s' % (cookie, sig)
+
 
 def _parse_vals(key, val, prefix, ikey):
     ts = int(time.time())
@@ -63,6 +66,7 @@ def _parse_vals(key, val, prefix, ikey):
         return None
 
     return user
+
 
 def _sign_request(ikey, skey, akey, username, prefix):
     """Generate a signed request for Duo authentication.
@@ -88,7 +92,7 @@ def _sign_request(ikey, skey, akey, username, prefix):
     if not akey or len(akey) < AKEY_LEN:
         return ERR_AKEY
 
-    vals = [ username, ikey ]
+    vals = [username, ikey]
 
     try:
         duo_sig = _sign_vals(skey, vals, prefix, DUO_EXPIRE)

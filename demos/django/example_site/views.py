@@ -4,6 +4,7 @@ from django.conf import settings
 
 from duo_app import duo_auth
 
+
 @login_required
 @duo_auth.duo_auth_required
 def duo_private(request):
@@ -11,6 +12,7 @@ def duo_private(request):
     View which requires a login and Duo authentication.
     """
     return HttpResponse('Content protected by Django and Duo auth.')
+
 
 @login_required
 def duo_private_manual(request):
@@ -22,6 +24,7 @@ def duo_private_manual(request):
             '%s?next=%s' % (settings.DUO_LOGIN_URL, request.path))
     return HttpResponse('Content protected by Django and Duo auth.')
 
+
 @login_required
 def private(request):
     """
@@ -29,11 +32,13 @@ def private(request):
     """
     return HttpResponse('Content protected by Django auth.')
 
+
 def public(request):
     """
     Public view.
     """
     return HttpResponse('Public content.')
+
 
 def profile(request):
     """
