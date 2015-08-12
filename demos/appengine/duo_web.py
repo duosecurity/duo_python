@@ -37,24 +37,28 @@ def _sign_vals(key, vals, prefix, expire):
     exp = str(int(time.time()) + expire)
 
     val = '|'.join(vals + [ exp ])
-    b64 = base64.b64encode(val)
+    b64 = base64.b64encode(val.encode('utf-8')).decode('utf-8')
     cookie = '%s|%s' % (prefix, b64)
 
-    sig = _hmac_sha1(key, cookie)
+    sig = _hmac_sha1(key.encode('utf-8'), cookie.encode('utf-8'))
     return '%s|%s' % (cookie, sig)
 
 def _parse_vals(key, val, prefix, ikey):
     ts = int(time.time())
     u_prefix, u_b64, u_sig = val.split('|')
+    cookie = '%s|%s' % (u_prefix, u_b64)
+    e_key = key.encode('utf-8')
+    e_cookie = cookie.encode('utf-8')
 
-    sig = _hmac_sha1(key, '%s|%s' % (u_prefix, u_b64))
-    if _hmac_sha1(key, sig) != _hmac_sha1(key, u_sig):
+    sig = _hmac_sha1(e_key, e_cookie)
+    if _hmac_sha1(e_key, sig.encode('utf-8')) != _hmac_sha1(e_key, u_sig.encode('utf-8')):
         return None
 
     if u_prefix != prefix:
         return None
 
-    user, u_ikey, exp = base64.b64decode(u_b64).split('|')
+    decoded = base64.b64decode(u_b64).decode('utf-8')
+    user, u_ikey, exp = decoded.split('|')
 
     if u_ikey != ikey:
         return None
@@ -93,7 +97,7 @@ def _sign_request(ikey, skey, akey, username, prefix):
     try:
         duo_sig = _sign_vals(skey, vals, prefix, DUO_EXPIRE)
         app_sig = _sign_vals(akey, vals, APP_PREFIX, APP_EXPIRE)
-    except:
+    except Exception:
         return ERR_UNKNOWN
 
     return '%s:%s' % (duo_sig, app_sig)
@@ -146,7 +150,7 @@ def _verify_response(ikey, skey, akey, prefix, sig_response):
         auth_sig, app_sig = sig_response.split(':')
         auth_user = _parse_vals(skey, auth_sig, AUTH_PREFIX, ikey)
         app_user = _parse_vals(akey, app_sig, APP_PREFIX, ikey)
-    except:
+    except Exception:
         return None
 
     if auth_user != app_user:
