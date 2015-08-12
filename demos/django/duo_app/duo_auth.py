@@ -95,8 +95,10 @@ def login(request):
             request,
             {'message': message,
              'next': next_page,
+             'duo_css_src': '/'.join([settings.STATIC_URL,
+                                     'Duo-Frame.css']),
              'duo_js_src': '/'.join([settings.STATIC_URL,
-                                     'Duo-Web-v1.bundled.min.js']),
+                                     'Duo-Web-v2.js']),
              'duo_host': settings.DUO_HOST,
              'post_action': request.path,
              'sig_request': sig_request})

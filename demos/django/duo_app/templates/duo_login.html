@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="{{ duo_css_src }}">
+{% endblock %}
+
 {% block content %}
 
 <p>{{ message }}</p>
@@ -12,10 +18,12 @@
 </form>
 
 <script src="{{ duo_js_src }}"></script>
-<script>
-Duo.init({'host':'{{ duo_host }}', 'sig_request':'{{ sig_request }}',
-          'post_action':'{{ post_action }}'});
-</script>
-<iframe height="500" width="620" frameborder="0" id="duo_iframe" />
+<iframe id="duo_iframe"
+        frameborder="0"
+        data-host="{{ duo_host }}"
+        data-sig-request="{{ sig_request }}"
+        data-post-action="{{ post_action }}"
+        >
+</iframe>
 
 {% endblock %}
