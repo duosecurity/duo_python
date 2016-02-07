@@ -64,8 +64,7 @@ def duo_auth_required(view_func, redirect_field_name=REDIRECT_FIELD_NAME):
             return HttpResponseRedirect(
                 '%s?%s=%s' % (
                     settings.DUO_LOGIN_URL, redirect_field_name, path))
-        return wraps(
-            view_func, assigned=available_attrs(view_func))(_wrapped_view)
+        return _wrapped_view
     return decorator(view_func)
 
 
