@@ -221,7 +221,7 @@ window.Duo = (function(document, window) {
                 }
             }
 
-            if (typeof options.submit_callback === 'function'){
+            if (typeof options.submit_callback === 'function') {
                 submitCallback = options.submit_callback;
             }
         }
@@ -308,7 +308,7 @@ window.Duo = (function(document, window) {
         iframe.src = [
             'https://', host, '/frame/web/v1/auth?tx=', duoSig,
             '&parent=', document.location.href,
-            '&v=2.1'
+            '&v=2.2'
         ].join('');
 
         // listen for the 'message' event
@@ -346,7 +346,7 @@ window.Duo = (function(document, window) {
         form.appendChild(input);
 
         // away we go!
-        if(typeof submitCallback === "function"){
+        if (typeof submitCallback === "function") {
             submitCallback.call(null, form);
         } else {
             form.submit();
@@ -360,6 +360,7 @@ window.Duo = (function(document, window) {
     return {
         init: init,
         _parseSigRequest: parseSigRequest,
-        _isDuoMessage: isDuoMessage
+        _isDuoMessage: isDuoMessage,
+        _doPostBack: doPostBack
     };
 }(document, window));
