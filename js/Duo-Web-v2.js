@@ -13,7 +13,8 @@ window.Duo = (function(document, window) {
         sigRequest,
         duoSig,
         appSig,
-        iframe;
+        iframe,
+        submitCallback;
 
     function throwError(message, url) {
         throw new Error(
@@ -190,6 +191,9 @@ window.Duo = (function(document, window) {
      * @param {String} options.sig_request                    Request token
      * @param {String} [options.post_action='']               URL to POST back to after successful auth
      * @param {String} [options.post_argument='sig_response'] Parameter name to use for response token
+     * @param {Function} [options.submit_callback]            If provided, duo will not submit the form instead execute
+     *                                                        the callback function with reference to the "duo_form" form object
+     *                                                        submit_callback can be used to prevent the webpage from reloading.
      */
     function init(options) {
         if (options) {
@@ -215,6 +219,10 @@ window.Duo = (function(document, window) {
                 } else if (typeof options.iframe === 'string') {
                     iframeId = options.iframe;
                 }
+            }
+
+            if (typeof options.submit_callback === 'function'){
+                submitCallback = options.submit_callback;
             }
         }
 
@@ -338,7 +346,11 @@ window.Duo = (function(document, window) {
         form.appendChild(input);
 
         // away we go!
-        form.submit();
+        if(typeof submitCallback === "function"){
+            submitCallback.call(null, form);
+        } else {
+            form.submit();
+        }
     }
 
     // when the DOM is ready, initialize
