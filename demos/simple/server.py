@@ -97,6 +97,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
                 <h1>Duo Authentication</h1>
                 <script src='/Duo-Web-v2.js'></script>
                 <iframe id="duo_iframe"
+                        title="Two-Factor Authentication"
                         frameborder="0"
                         data-host="%(host)s"
                         data-sig-request="%(sig_request)s"
