@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if session.logged_in %}
+        <form action="{{ url_for('show_entries') }}" method="post" class="add-entry">
+            <dl> 
+				<h2> You are logged in! </h2> 
+			</dl>
+        </form>
+    {% endif %}
+{% endblock %}
