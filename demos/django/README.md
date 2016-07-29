@@ -1,6 +1,6 @@
 Demonstration of a Django site with Duo authentication.
 
-Tested with Django 1.6 & 1.7.
+Tested with Django 1.10 on Python 2.7
 
 # Setup
 
@@ -24,15 +24,20 @@ in settings.py.
 
 Start the site:
 
-    python manage.py syncdb; python manage.py runserver
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
 
 Add a Django user.  The Duo user will have the same username as the
 Django user; if this user does not exist, you will be able to enroll
 as that user.
 
-Now you can visit interesting URLs such as /public, /private, /duo_private,
-and /duo_private_manual.  To remove your Django and Duo authorization cookies,
-visit /accounts/duo_logout and /accounts/logout.
+Now you can visit interesting URLs such as:
+/private - content protected by 1fa (django) auth
+/duo_private - content protected by 1fa (django) and 2fa (Duo) auth
+
+To remove your Django and Duo authorization cookies by
+visiting /accounts/logout/ & /accounts/duo_logout/, respectively.
 
 Note that this example serves static files with the Django development server,
 which is not recommended for production.

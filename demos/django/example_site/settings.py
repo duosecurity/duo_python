@@ -40,12 +40,26 @@ DATABASES = {
     }
 }
 
-TEMPLATE_DIRS = (
-    '/'.join([BASE_DIR, 'templates']),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': True,
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+
+INTERNAL_IPS = ['*']
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -93,14 +107,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '6#jhv1%cj)!4ajbw8c&-=v!d3x*elcp$let02zh&n!rs4d**%j'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

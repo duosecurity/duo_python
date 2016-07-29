@@ -1,7 +1,7 @@
-from django.conf.urls import patterns
+from django.conf.urls import url
 import duo_auth
 
-urlpatterns = patterns(
-    '',
-    (r'accounts/duo_login/$', duo_auth.login),
-    (r'accounts/duo_logout/$', duo_auth.logout))
+urlpatterns = [
+    url(r'^accounts/duo_login', duo_auth.login),
+    url(r'^accounts/duo_logout/$', duo_auth.logout),
+]

@@ -1,16 +1,15 @@
 from functools import wraps
 import urllib
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.conf import settings
-from django.template import RequestContext, loader
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import available_attrs
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlquote
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 import duo_web
@@ -89,19 +88,18 @@ def login(request):
         sig_request = duo_web.sign_request(
             settings.DUO_IKEY, settings.DUO_SKEY, settings.DUO_AKEY,
             duo_username(request.user))
-        template = loader.get_template('duo_login.html')
-        context = RequestContext(
-            request,
-            {'message': message,
-             'next': next_page,
-             'duo_css_src': '/'.join([settings.STATIC_URL,
+        context = {
+            'message': message,
+            'next': next_page,
+            'duo_css_src': '/'.join([settings.STATIC_URL,
                                      'Duo-Frame.css']),
-             'duo_js_src': '/'.join([settings.STATIC_URL,
+            'duo_js_src': '/'.join([settings.STATIC_URL,
                                      'Duo-Web-v2.js']),
-             'duo_host': settings.DUO_HOST,
-             'post_action': request.path,
-             'sig_request': sig_request})
-        return HttpResponse(template.render(context))
+            'duo_host': settings.DUO_HOST,
+            'post_action': request.path,
+            'sig_request': sig_request
+        }
+        return render(request, 'duo_login.html', context)
     elif request.method == 'POST':
         sig_response = request.POST.get('sig_response', '')
         duo_user = duo_web.verify_response(
@@ -132,16 +130,16 @@ def logout(request, next_page=None,
     """
     duo_unauthenticate(request)
     if next_page is None:
-        redirect_to = request.REQUEST.get(redirect_field_name, '')
+        redirect_to = request.GET.get(redirect_field_name, '')
         if redirect_to:
             return HttpResponseRedirect(redirect_to)
         else:
             current_site = get_current_site(request)
-            return render_to_response(template_name, {
+            return render(request, template_name, {
                 'site': current_site,
                 'site_name': current_site.name,
                 'title': _('Logged out')
-            }, context_instance=RequestContext(request))
+            })
     else:
         # Redirect to this page until the session has been cleared.
         return HttpResponseRedirect(next_page or request.path)
