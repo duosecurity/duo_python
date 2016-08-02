@@ -1,6 +1,6 @@
 Demonstration of a simple Python web server with Duo authentication.
 
-Tested with Python 2.6.
+Tested with Python 2.7.
 
 # Install/Run
 

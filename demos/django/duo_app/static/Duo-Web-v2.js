@@ -307,8 +307,8 @@ window.Duo = (function(document, window) {
         // point the iframe at Duo
         iframe.src = [
             'https://', host, '/frame/web/v1/auth?tx=', duoSig,
-            '&parent=', document.location.href,
-            '&v=2.2'
+            '&parent=', encodeURIComponent(document.location.href),
+            '&v=2.3'
         ].join('');
 
         // listen for the 'message' event
