@@ -2,6 +2,8 @@ from BaseHTTPServer import HTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import urlparse
 import cgi
+import os
+import sys
 
 import duo_web
 
@@ -144,6 +146,18 @@ def main(ikey, skey, akey, host, port=8080):
 
 if __name__ == '__main__':
     import ConfigParser
+
+    filename = "duo.conf"
+    directory = os.path.join("demos", "simple")
+    path = os.path.join(directory, filename)
+
     config = ConfigParser.ConfigParser()
-    config.read('duo.conf')
+    if os.path.exists(filename):
+        config.read(filename)
+    elif os.path.exists(path):
+        config.read(path)
+    else:
+        print "Couldn't find {}, are you sure you're in {}?".format(filename, directory)
+        sys.exit(1)
+
     main(**dict(config.items('duo')))
