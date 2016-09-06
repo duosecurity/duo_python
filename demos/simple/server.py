@@ -154,8 +154,6 @@ if __name__ == '__main__':
     config = ConfigParser.ConfigParser()
     if os.path.exists(filename):
         config.read(filename)
-    elif os.path.exists(path):
-        config.read(path)
     else:
         print "Couldn't find {}, are you sure you're in {}?".format(filename, directory)
         sys.exit(1)
