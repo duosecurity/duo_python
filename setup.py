@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='duo_web',
-    version='1.1',
+    version='1.2',
     description='Duo Web SDK for two-factor authentication',
     author='Duo Security, Inc.',
     author_email='support@duosecurity.com',
@@ -19,7 +19,8 @@ setup(
     ],
     license='BSD',
     classifiers=[
-        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         'License :: OSI Approved :: BSD License',
     ],
 )

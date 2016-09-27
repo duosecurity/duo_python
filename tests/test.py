@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 '''Simple tests for Duo Web SDK'''
 
 import unittest
 import duo_web
+import sys
 
 IKEY = "DIXXXXXXXXXXXXXXXXXX"
 WRONG_IKEY = "DIXXXXXXXXXXXXXXXXXY"
@@ -38,6 +40,21 @@ class TestSDK(unittest.TestCase):
 
         request_sig = duo_web.sign_request(IKEY, SKEY, 'invalid', USER)
         self.assertEqual(request_sig, duo_web.ERR_AKEY)
+
+    def test_sign_request_bytestring_username(self):
+        """
+        Tests that duo_web will produce an encoding error for bytestring
+        usernames in Python 3 (you cannot encode a bytes object in PY3)
+        and will reject bytestring usernames in PY2 if they contain non-ASCII
+        characters.
+        """
+        if sys.version_info[0] == 2:
+            username = bytes("testüser")
+        else:
+            username = bytes("testüser", "utf-8")
+        bytestring_request_sig = duo_web.sign_request(
+            IKEY, SKEY, AKEY, username)
+        self.assertEqual(duo_web.ERR_USER_ENCODING, bytestring_request_sig)
 
     def test_verify_response(self):
         request_sig = duo_web.sign_request(IKEY, SKEY, AKEY, USER)

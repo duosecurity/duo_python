@@ -27,6 +27,7 @@ ERR_USER = 'ERR|The username passed to sign_request() is invalid.'
 ERR_IKEY = 'ERR|The Duo integration key passed to sign_request() is invalid.'
 ERR_SKEY = 'ERR|The Duo secret key passed to sign_request() is invalid.'
 ERR_AKEY = 'ERR|The application secret key passed to sign_request() must be at least %s characters.' % AKEY_LEN
+ERR_USER_ENCODING = 'ERR|The username passed to sign_request() could not be encoded. Pass a <unicode> username in Python 2 or <str> username in Python 3.'
 ERR_UNKNOWN = 'ERR|An unknown error has occurred.'
 
 def _hmac_sha1(key, msg):
@@ -81,6 +82,12 @@ def _sign_request(ikey, skey, akey, username, prefix):
     username  -- Primary-authenticated username
     prefix    -- DUO_PREFIX or ENROLL_REQUEST_PREFIX
     """
+    # check early if username can be successfully encoded
+    try:
+        username.encode('utf-8')
+    except (UnicodeDecodeError, AttributeError):
+        return ERR_USER_ENCODING
+
     if not username:
         return ERR_USER
     if '|' in username:

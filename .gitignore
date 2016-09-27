@@ -1,8 +1,11 @@
 *.pyc
 *.pyo
 *.swp
+.env
+*.egg-info*
 *~
 .gitconfig
 MANIFEST
 build
 dist
+__pycache__
