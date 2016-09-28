@@ -13,8 +13,8 @@ setup(
     },
     data_files=[
         ('js', [
-                'js/Duo-Web-v2.js',
-                'js/Duo-Web-v2.min.js',
+            'js/Duo-Web-v2.js',
+            'js/Duo-Web-v2.min.js',
         ]),
     ],
     license='BSD',
