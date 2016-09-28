@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='duo_web',
-    version='1.2',
+    version='1.2.0',
     description='Duo Web SDK for two-factor authentication',
     author='Duo Security, Inc.',
     author_email='support@duosecurity.com',
