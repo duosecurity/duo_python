@@ -13,6 +13,7 @@ Development:
 ```
 $ git clone https://github.com/duosecurity/duo_python.git
 $ cd duo_python
+$ pip install --requirement requirements-dev.txt
 ```
 
 System:
