@@ -111,7 +111,7 @@ class SecondaryAuthPage(BasePage):
         
     def post(self):
         """
-        If we have a sig_response argument containig a Duo auth cookie
+        If we have a sig_response argument containing a Duo auth cookie
         indicating that the current user has logged in to both Google and
         Duo with matching usernames, write a login cookie and redirect to /.
         Otherwise, indicate failure.

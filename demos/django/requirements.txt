@@ -1,0 +1,3 @@
+django
+duo_web
+six==1.10.0

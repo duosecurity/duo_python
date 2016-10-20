@@ -12,6 +12,7 @@ import duo_app
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', private),
     url(r'^private/$', private),
     url(r'^public/$', public),
     url(r'^duo_private/$', duo_private),

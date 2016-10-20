@@ -30,7 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.admin',    
+    'django.contrib.admin',
     'duo_app')
 
 DATABASES = {

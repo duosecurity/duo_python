@@ -1,5 +1,4 @@
 from functools import wraps
-import urllib
 
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -13,6 +12,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 import duo_web
+from six.moves.urllib.parse import urlencode
 
 
 def duo_username(user):
@@ -113,7 +113,7 @@ def login(request):
             if next_page:
                 arg_map['next'] = next_page
             redirect_url = '%s?%s' % (
-                request.path, urllib.urlencode(arg_map))
+                request.path, urlencode(arg_map))
             return HttpResponseRedirect(redirect_url)
         else:
             duo_authenticate(request)

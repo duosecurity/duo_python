@@ -6,7 +6,14 @@ This package allows a web developer to quickly add Duo's interactive, self-servi
 
 Files located in the `js` directory should be hosted by your webserver for inclusion in web pages.
 
-# Installing
+# Installation
+
+Using `pip`:
+
+`pip install duo_web`.
+
+# Examples
+Included are examples for integrating `duo_web` into Google App Engine, Django, and the standard library `HTTPSimpleServer`. See each demo directory for instructions on setup and running.
 
 Development:
 
@@ -16,23 +23,13 @@ $ cd duo_python
 $ pip install --requirement requirements-dev.txt
 ```
 
-System:
-
-```
-$ pip install duo_web
-```
-
-# Using
-
-See the `demos` folder for how to use this library.
-
-# Test
+# Testing
 
 ```
 $ nose2
 ```
 
-# Lint
+# Linting
 
 ```
 $ flake8 --ignore=E501 duo_web/ tests/

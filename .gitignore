@@ -1,6 +1,7 @@
 *.pyc
 *.pyo
 *.swp
+sqlite.db
 .env
 *.egg-info*
 *~
