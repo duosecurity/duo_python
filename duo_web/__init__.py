@@ -159,7 +159,7 @@ def _verify_response(ikey, skey, akey, prefix, sig_response):
     """
     try:
         auth_sig, app_sig = sig_response.split(':')
-        auth_user = _parse_vals(skey, auth_sig, AUTH_PREFIX, ikey)
+        auth_user = _parse_vals(skey, auth_sig, prefix, ikey)
         app_user = _parse_vals(akey, app_sig, APP_PREFIX, ikey)
     except Exception:
         return None
