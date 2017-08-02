@@ -17,6 +17,7 @@ USER = "testuser"
 INVALID_RESPONSE = "AUTH|INVALID|SIG"
 EXPIRED_RESPONSE = "AUTH|dGVzdHVzZXJ8RElYWFhYWFhYWFhYWFhYWFhYWFh8MTMwMDE1Nzg3NA==|cb8f4d60ec7c261394cd5ee5a17e46ca7440d702"
 FUTURE_RESPONSE = "AUTH|dGVzdHVzZXJ8RElYWFhYWFhYWFhYWFhYWFhYWFh8MTYxNTcyNzI0Mw==|d20ad0d1e62d84b00a3e74ec201a5917e77b6aef"
+FUTURE_ENROLL_RESPONSE = "ENROLL|dGVzdHVzZXJ8RElYWFhYWFhYWFhYWFhYWFhYWFh8MTYxNTcyNzI0Mw==|74a0bcc807d40c828b448512f442dce46a85aa24"
 WRONG_PARAMS_RESPONSE = "AUTH|dGVzdHVzZXJ8RElYWFhYWFhYWFhYWFhYWFhYWFh8MTYxNTcyNzI0M3xpbnZhbGlkZXh0cmFkYXRh|6cdbec0fbfa0d3f335c76b0786a4a18eac6cdca7"
 WRONG_PARAMS_APP = "APP|dGVzdHVzZXJ8RElYWFhYWFhYWFhYWFhYWFhYWFh8MTYxNTcyNzI0M3xpbnZhbGlkZXh0cmFkYXRh|7c2065ea122d028b03ef0295a4b4c5521823b9b5"
 
@@ -63,7 +64,13 @@ class TestSDK(unittest.TestCase):
 
         request_sig = duo_web.sign_request(IKEY, SKEY, 'invalid' * 6, USER)
         duo_sig, invalid_app_sig = request_sig.split(':')
-
+        
+        request_sig = duo_web.sign_enroll_request(IKEY, SKEY, AKEY, USER)
+        duo_sig, valid_enroll_sig = request_sig.split(':')
+        
+        request_sig = duo_web.sign_enroll_request(IKEY, SKEY, 'invalid' * 6, USER)
+        duo_sig, invalid_enroll_sig = request_sig.split(':')
+        
         invalid_user = duo_web.verify_response(IKEY, SKEY, AKEY, INVALID_RESPONSE + ':' + valid_app_sig)
         self.assertEqual(invalid_user, None)
 
@@ -84,6 +91,12 @@ class TestSDK(unittest.TestCase):
 
         future_user = duo_web.verify_response(WRONG_IKEY, SKEY, AKEY, FUTURE_RESPONSE + ':' + valid_app_sig)
         self.assertEqual(future_user, None)
+
+        enroll_user = duo_web.verify_enroll_response(IKEY, SKEY, AKEY, FUTURE_ENROLL_RESPONSE + ':' + valid_enroll_sig)
+        self.assertEqual(enroll_user, USER)
+
+        enroll_user = duo_web.verify_enroll_response(IKEY, SKEY, AKEY, FUTURE_ENROLL_RESPONSE + ':' + invalid_enroll_sig)
+        self.assertEqual(enroll_user, None)
 
 if __name__ == '__main__':
     unittest.main()
