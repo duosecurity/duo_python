@@ -143,6 +143,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
 
 
 def main(ikey, skey, akey, host, port=8080):
+    port = int(port)
     server = HTTPServer(('', port), RequestHandler)
     server.ikey = ikey
     server.skey = skey
