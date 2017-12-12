@@ -25,18 +25,6 @@ $ cd duo_python
 $ pip install --requirement requirements-dev.txt
 ```
 
-## CRITICAL: Add Duo to logins for `/admin` as well
-
-The examples herein do not add Duo "everywhere" nor the Django admin site. **This is critical to recognize, because if you do not have 2FA on `/admin`, and you have `/admin` enabled, you essentially degrade to 1FA on the most sensitive part of your application.**
-
-Happily it is not difficult! You just have some choices to make about how to do it. 
-
-You can choose to add Duo "everywhere" (except login and logout) by applying middleware; [here is some discussion and examples of this approach](https://stackoverflow.com/questions/2164069/best-way-to-make-djangos-login-required-the-default). There is a [third party library, `django-stronghold`, which can achieve the same effect](https://github.com/mgrouchy/django-stronghold); however, you can avoid adding a dependency by just inlining your own middleware (it does not take much code).
-
-If you do not want to add it "everywhere" you can just make sure to add it to the admin site explicitly. Due to the typical "shortcut" fashion that admin views are added to your configuration, you have some choices to make in how you add the `duo_auth_required` decorator to all admin views. You basically want some helper to go through all child views and decorate them. [There are multiple approaches discussed here, including at least one third party library](https://stackoverflow.com/q/2307926/884640).
-
-Whichever way you choose to do it, don't leave the admin panel less secure!
-
 # Testing
 
 ```
