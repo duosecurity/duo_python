@@ -46,6 +46,6 @@ host = host
 
 An optional parameter can be passed at runtime. If not provided, it will default to `duo`
 
-    python server.py duo_1
+    python server.py [-c|--config <config_section>]
 
 
