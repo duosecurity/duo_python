@@ -27,5 +27,25 @@ To run the server on port 8080:
 Visit the root URL with a 'user' argument, e.g.
 'http://localhost:8080/?user=myname'.
 
+# Multiple Configurations
+If desired, multiple configuration sections can be added to `duo.conf`:
+
+```
+[duo]
+ikey = ikey
+skey = skey
+akey = akey
+host = host
+
+[duo_1]
+ikey = ikey
+skey = skey
+akey = akey
+host = host
+```
+
+An optional parameter can be passed at runtime. If not provided, it will default to `duo`
+
+    python server.py [-c|--config <config_section>]
 
 

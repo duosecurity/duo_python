@@ -4,6 +4,7 @@ from six.moves.urllib.parse import urlparse, parse_qs
 import cgi
 import os
 import sys
+import argparse
 
 import duo_web
 
@@ -153,6 +154,20 @@ def main(ikey, skey, akey, host, port=8080):
     print("'http://localhost:%d/?user=myname'." % port)
     server.serve_forever()
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument(
+        "-c", "--config",
+        help="The config section from duo.conf to use",
+        default="duo",
+        metavar='')
+
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
     import six.moves.configparser as ConfigParser
 
@@ -169,4 +184,5 @@ if __name__ == '__main__':
                 filename, directory))
         sys.exit(1)
 
-    main(**dict(config.items('duo')))
+    args = parse_args()
+    main(**dict(config.items(args.config)))
