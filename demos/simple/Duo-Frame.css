@@ -1,5 +1,10 @@
 body {
     text-align: center;
+    font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+}
+
+h1 {
+    font-weight: 200;
 }
 
 iframe {
