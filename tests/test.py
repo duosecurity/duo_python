@@ -64,13 +64,13 @@ class TestSDK(unittest.TestCase):
 
         request_sig = duo_web.sign_request(IKEY, SKEY, 'invalid' * 6, USER)
         duo_sig, invalid_app_sig = request_sig.split(':')
-        
+
         request_sig = duo_web.sign_enroll_request(IKEY, SKEY, AKEY, USER)
         duo_sig, valid_enroll_sig = request_sig.split(':')
-        
+
         request_sig = duo_web.sign_enroll_request(IKEY, SKEY, 'invalid' * 6, USER)
         duo_sig, invalid_enroll_sig = request_sig.split(':')
-        
+
         invalid_user = duo_web.verify_response(IKEY, SKEY, AKEY, INVALID_RESPONSE + ':' + valid_app_sig)
         self.assertEqual(invalid_user, None)
 
@@ -97,6 +97,7 @@ class TestSDK(unittest.TestCase):
 
         enroll_user = duo_web.verify_enroll_response(IKEY, SKEY, AKEY, FUTURE_ENROLL_RESPONSE + ':' + invalid_enroll_sig)
         self.assertEqual(enroll_user, None)
+
 
 if __name__ == '__main__':
     unittest.main()

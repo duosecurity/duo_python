@@ -34,7 +34,7 @@ $ nose2
 # Linting
 
 ```
-$ flake8 --ignore=E501 duo_web/ tests/
+$ flake8
 ```
 
 # Support
