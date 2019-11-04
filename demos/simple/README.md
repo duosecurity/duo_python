@@ -2,6 +2,10 @@ Demonstration of a simple Python web server with Duo authentication.
 
 Tested with Python 2.7 and Python 3.5.
 
+# Preparation
+
+Review the Duo WebSDK documentation at https://duo.com/docs/duoweb.
+
 # Configuration
 
 To set up, edit duo.conf with the appropriate `ikey`, `skey`, `akey`, and
