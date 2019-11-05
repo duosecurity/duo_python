@@ -32,7 +32,7 @@ ERR_UNKNOWN = 'ERR|An unknown error has occurred.'
 
 
 def _hmac_sha1(key, msg):
-    ctx = hmac.new(key, msg, hashlib.sha1)
+    ctx = hmac.new(key, msg, hashlib.sha1)  # noqa: DUO130, HMAC-SHA1 still secure
     return ctx.hexdigest()
 
 
