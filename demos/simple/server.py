@@ -1,6 +1,8 @@
 from six.moves.BaseHTTPServer import HTTPServer
 from six.moves.SimpleHTTPServer import SimpleHTTPRequestHandler
 from six.moves.urllib.parse import urlparse, parse_qs
+from six import ensure_text
+
 import cgi
 import os
 import sys
@@ -70,7 +72,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
         # this will usually be done with framework-appropriate authentication.
         # The local username will be used as the Duo username as well.
         try:
-            username = self.require_query('user')
+            username = ensure_text(self.require_query('user'))
         except ValueError:
             self.error(b'user query parameter is required')
             return
