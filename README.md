@@ -4,7 +4,7 @@
 [![Issues](https://img.shields.io/github/issues/duosecurity/duo_python)](https://github.com/duosecurity/duo_python/issues)
 [![Forks](https://img.shields.io/github/forks/duosecurity/duo_python)](https://github.com/duosecurity/duo_python/network/members)
 [![Stars](https://img.shields.io/github/stars/duosecurity/duo_python)](https://github.com/duosecurity/duo_python/stargazers)
-
+[![License](https://img.shields.io/badge/License-View%20License-orange)](https://github.com/duosecurity/duo_python/blob/master/LICENSE)
 
 **duo_python** - Duo two-factor authentication for Python web applications: https://duo.com/docs/duoweb
 
