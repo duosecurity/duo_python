@@ -8,7 +8,6 @@ from example_site.views import (private, public, duo_private,
     duo_private_manual, profile,
 )
 from django.contrib.auth.views import login, logout
-import duo_app
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
