@@ -17,7 +17,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import base64, hmac, hashlib
+import base64, binascii, hmac, hashlib
 import re
 import datetime, time, calendar
 import Cookie
@@ -106,7 +106,7 @@ class RequestHandler(object):
             return None
         try:
             return base64.b64decode(parts[0])
-        except:
+        except binascii.Error:
             return None
 
     def _cookie_signature(self, *parts):

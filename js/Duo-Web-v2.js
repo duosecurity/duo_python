@@ -512,7 +512,7 @@
             while (promptElement.firstChild) {
                 // We call `removeChild()` instead of doing `innerHTML = ""`
                 // to make sure we unbind any events.
-                promptElement.removeChild(promptElement.firstChild)
+                promptElement.removeChild(promptElement.firstChild);
             }
 
             iframe = document.createElement('iframe');
