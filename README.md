@@ -8,6 +8,8 @@
 
 **duo_python** - Duo two-factor authentication for Python web applications: https://duo.com/docs/duoweb
 
+Checkout our new [duo_universal_python](https://github.com/duosecurity/duo_universal_python) repo.
+
 This package allows a web developer to quickly add Duo's interactive, self-service, two-factor authentication to any web login form - without setting up secondary user accounts, directory synchronization, servers, or hardware.
 
 Files located in the `js` directory should be hosted by your webserver for inclusion in web pages.
