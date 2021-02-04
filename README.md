@@ -6,10 +6,10 @@
 [![Stars](https://img.shields.io/github/stars/duosecurity/duo_python)](https://github.com/duosecurity/duo_python/stargazers)
 [![License](https://img.shields.io/badge/License-View%20License-orange)](https://github.com/duosecurity/duo_python/blob/master/LICENSE)
 
-**duo_python** - Duo two-factor authentication for Python web applications: https://duo.com/docs/duoweb
+**duo_python** - Duo two-factor authentication for Python web applications: https://duo.com/docs/duoweb-v2
 
 Duo has released a new Python client that will let you integrate the Duo Universal Prompt into your web applications.
-Check out https://duo.com/docs/duoweb-v4 for more info on the Universal Prompt and [duo_universal_python](https://github.com/duosecurity/duo_universal_python) for the new client.
+Check out https://duo.com/docs/duoweb for more info on the Universal Prompt and [duo_universal_python](https://github.com/duosecurity/duo_universal_python) for the new client.
 
 This package allows a web developer to quickly add Duo's interactive, self-service, two-factor authentication to any web login form - without setting up secondary user accounts, directory synchronization, servers, or hardware.
 
