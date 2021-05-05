@@ -1,6 +1,6 @@
 /**
  * Duo Web SDK v2
- * Copyright 2019, Duo Security
+ * Copyright 2021, Duo Security
  */
 
 (function (root, factory) {
@@ -380,9 +380,9 @@
      */
     function generateIframeSrc() {
         return [
-            'https://', host, '/frame/web/v1/auth?tx=', duoSig,
+            'https://', host, '/frame/web/v1/auth?tx=', encodeURIComponent(duoSig),
             '&parent=', encodeURIComponent(document.location.href),
-            '&v=2.8'
+            '&v=2.9'
         ].join('');
     }
 
