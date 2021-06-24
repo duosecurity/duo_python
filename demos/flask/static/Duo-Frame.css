@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+    font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+}
+
+h1 {
+    font-weight: 200;
+}
+
+iframe {
+    width: 100%;
+    min-width: 304px;
+    max-width: 620px;
+    height: 330px;
+}
