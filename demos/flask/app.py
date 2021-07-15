@@ -17,6 +17,12 @@ def do_GET():
     if username is None:
         return 'user query parameter is required', 400
 
+    try:
+        app.duo_client.health_check()
+    except duo_universal.DuoException:
+        return 'Duo health check failed. Logged in without 2FA as %s.' % username
+        # alternatively: return 'Duo health check failed, denying login.'
+
     sig_request = duo_web.sign_request(app.ikey, app.skey, app.akey, username)
     return flask.render_template('index.html', host=app.host, sig_request=sig_request)
 
