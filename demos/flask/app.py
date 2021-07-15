@@ -39,16 +39,16 @@ def do_duo_callback():
     if (state is None) or (username is None) or (state != flask.request.args.get('state')):
         return 'Invalid state or username'
 
-    sig_response = flask.request.form.get('sig_response')
-    if sig_response is None:
-        return 'sig_response post parameter is required', 400
-    user = duo_web.verify_response(
-        app.ikey, app.skey, app.akey, sig_response)
+    duo_code = flask.request.args.get('duo_code')
+    if duo_code is None:
+        return 'duo_code post parameter is required', 400
 
-    if user is None:
+    try:
+        app.duo_client.exchange_authorization_code_for_2fa_result(duo_code, username)
+    except duo_universal.DuoException:
         return 'Did not authenticate with Duo.'.encode('utf-8')
 
-    return ('Authenticated with Duo as %s.' % user).encode('utf-8')
+    return ('Authenticated with Duo as %s.' % username).encode('utf-8')
 
 
 def main(client_id, client_secret, host, redirect_uri, port=8080):
