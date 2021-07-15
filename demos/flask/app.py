@@ -34,12 +34,14 @@ def do_POST():
     return ('Authenticated with Duo as %s.' % user).encode('utf-8')
 
 
-def main(ikey, skey, akey, host, port=8080):
+def main(client_id, client_secret, host, redirect_uri, port=8080):
     port = int(port)
-    app.ikey = ikey
-    app.skey = skey
-    app.akey = akey
-    app.host = host
+    app.duo_client = duo_universal.Client(
+        client_id=client_id,
+        client_secret=client_secret,
+        host=host,
+        redirect_uri=redirect_uri
+    )
     print("Visit the root URL with a 'user' argument, e.g.")
     print("'http://localhost:%d/?user=myname'." % port)
     app.run(host="0.0.0.0", port=8080)
