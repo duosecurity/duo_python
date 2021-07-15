@@ -36,6 +36,9 @@ def do_duo_callback():
     state = flask.session['state']
     username = flask.session['username']
 
+    if (state is None) or (username is None) or (state != flask.request.args.get('state')):
+        return 'Invalid state or username'
+
     sig_response = flask.request.form.get('sig_response')
     if sig_response is None:
         return 'sig_response post parameter is required', 400
