@@ -26,10 +26,16 @@ def do_GET():
     state = app.duo_client.generate_state()
     prompt_uri = app.duo_client.create_auth_url(username, state)
 
+    flask.session['state'] = state
+    flask.session['username'] = username
+
     return flask.redirect(prompt_uri)
 
 @app.route("/duo-callback", methods=['GET'])
 def do_duo_callback():
+    state = flask.session['state']
+    username = flask.session['username']
+
     sig_response = flask.request.form.get('sig_response')
     if sig_response is None:
         return 'sig_response post parameter is required', 400
