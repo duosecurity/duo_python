@@ -5,7 +5,7 @@ import argparse
 import flask
 import duo_universal
 
-app = flask.Flask(__name__, static_url_path='', static_folder='static')
+app = flask.Flask(__name__)
 app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET'])
@@ -23,8 +23,10 @@ def do_GET():
         return 'Duo health check failed. Logged in without 2FA as %s.' % username
         # alternatively: return 'Duo health check failed, denying login.'
 
-    sig_request = duo_web.sign_request(app.ikey, app.skey, app.akey, username)
-    return flask.render_template('index.html', host=app.host, sig_request=sig_request)
+    state = app.duo_client.generate_state()
+    prompt_uri = app.duo_client.create_auth_url(username, state)
+
+    return flask.redirect(prompt_uri)
 
 @app.route("/", methods=['POST'])
 def do_POST():
