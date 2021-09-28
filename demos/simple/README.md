@@ -4,7 +4,7 @@ Tested with Python 2.7 and Python 3.5.
 
 # Preparation
 
-Review the Duo WebSDK documentation at https://duo.com/docs/duoweb.
+Review the Duo WebSDK documentation at https://duo.com/docs/duoweb-v2.
 
 # Configuration
 
