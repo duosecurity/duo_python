@@ -1,8 +1,8 @@
 # Deprecation Notice
 
-Duo Security will deprecate and archive this repository on July 18, 2022. The repository will remain public and visible after that date, and integrations built using this repository’s code will continue to work. You can also continue to fork, clone, or pull from this repository after it is deprecated.
+This repository is deprecated by Duo Security.  The repository will remain public and visible, and integrations built using this repository’s code will continue to work.  You can also continue to fork, clone, or pull from this repository.
 
-However, Duo will not provide any further releases or enhancements after the deprecation date.
+However, Duo will not provide any further releases or enhancements.
 
 Duo recommends migrating your application to the Duo Universal Prompt. Refer to [our documentation](https://duo.com/docs/universal-prompt-update-guide) for more information on how to update.
 
