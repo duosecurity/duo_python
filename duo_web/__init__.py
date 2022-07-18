@@ -9,6 +9,9 @@ import base64
 import hashlib
 import hmac
 import time
+import warnings
+
+warnings.warn("deprecated", DeprecationWarning)
 
 DUO_PREFIX = 'TX'
 APP_PREFIX = 'APP'
